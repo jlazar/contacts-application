@@ -6,9 +6,14 @@
     "axios": "^0.16.2",
     "debounce-promise": "^3.0.1",
     "lodash": "^4.17.4",
+    "material-ui": "^0.18.7",
+    "material-ui-superselectfield": "^1.5.4",
     "query-string": "^4.3.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-native-select-multiple": "^1.0.4",
+    "react-router-dom": "^4.1.2",
+    "react-tap-event-plugin": "^2.0.1",
     "store": "^2.0.4"
   },
   "devDependencies": {
