@@ -1,16 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App/App'
-import registerServiceWorker from './registerServiceWorker'
-import './index.css'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import { BrowserRouter as Router} from 'react-router-dom'
+import registerServiceWorker from './registerServiceWorker'
+import App from './App/App'
 import { ApiClient } from './lib/contactually-api'
+import './index.css'
+
 const apiClient = new ApiClient();
 injectTapEventPlugin();
 
-if (apiClient.isAuthenticated()) {
+if (true) {
   // the API has been authenticated for use, we can render the react app
-  ReactDOM.render(<App />, document.getElementById('root'))
+  ReactDOM.render(<Router><App /></Router>, document.getElementById('root'))
 } else {
   // the API has not been authenticated for use, we will authenticate
   const url = window.location.pathname + window.location.hash

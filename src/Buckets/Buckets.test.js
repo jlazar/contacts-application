@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ContactsList from './ContactsList'
+import Buckets from './Buckets'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
-  ReactDOM.render(<ContactsList />, div)
+  ReactDOM.render(<Buckets />, div)
 })

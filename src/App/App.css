@@ -22,12 +22,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(-360deg); }
 }
-
-.ApplicationHeader {
+/* 
+.App-header {
   align-items: center;
   background: #42505d;
   display: -ms-flexbox;
   display: flex;
   height: 46px;
   width: 100%;
-}
+} */
