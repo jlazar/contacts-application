@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 import { Table, Button, Container } from 'semantic-ui-react';
 import CreateContactModal from '../CreateContactModal/CreateContactModal.js';
 import EditContactModal from '../EditContactModal/EditContactModal.js';
@@ -102,17 +103,35 @@ class ContactsList extends Component {
       }
     } else if (updateType === 'addExisting') {
       if (formData) {
-        let newData = [];
+        let newData = [],
+          removeData = [];
         for (let ele of formData) {
           if (ele.checked) {
             newData.push({ id: ele.id });
           }
         }
+        for (let oldEle of this.props.contacts) {
+          for (let currentEle of formData) {
+            if (oldEle.id === currentEle.id && !currentEle.checked) {
+              removeData.push({ id: oldEle.id });
+            }
+          }
+        }
+        newData = _.uniqBy(newData, 'id');
+        removeData = _.uniqBy(removeData, 'id');
         apiClient.post(`buckets/${this.props.bucketId}/contacts`, {
           data: newData,
           onSuccess: ({ data }) => {
-            this.setState({ openAddExistingModal: false });
-            this.props.updateContacts();
+            apiClient.delete(`buckets/${this.props.bucketId}/contacts`, {
+              data: removeData,
+              onSuccess: ({ data }) => {
+                this.setState({ openAddExistingModal: false });
+                this.props.updateContacts();
+              },
+              onError: (error) => {
+                console.log(error)
+              }
+            });
           },
           onError: (error) => {
             console.log(error)
