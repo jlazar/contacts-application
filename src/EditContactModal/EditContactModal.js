@@ -45,7 +45,7 @@ class CreateContactModal extends Component {
     return (
       <div>
         <Modal dimmer={false} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
-          <Modal.Header>New Contact: {formData.firstName} {formData.lastName}</Modal.Header>
+          <Modal.Header>Edit: {formData.firstName} {formData.lastName}</Modal.Header>
           <Modal.Content>
             <Modal.Description>
             <Form>

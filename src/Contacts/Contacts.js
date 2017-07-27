@@ -42,7 +42,7 @@ class Contacts extends Component {
   render() {
     return (
       <div className="Contacts">
-        <ContactsList contacts={this.state.contacts} />
+        <ContactsList contacts={this.state.contacts} updateContacts={() => this.updateContacts()} />
       </div>
     )
   }

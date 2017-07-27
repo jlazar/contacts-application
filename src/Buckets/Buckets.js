@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Dropdown, Image, Table, Button, Container } from 'semantic-ui-react';
 import ContactsList from '../ContactsList/ContactsList.js';
 import { ApiClient } from '../lib/contactually-api';
 import './Buckets.css';
@@ -32,6 +34,7 @@ class Buckets extends Component {
     //Get all buckets
     apiClient.get(`buckets/`, {
       onSuccess: ({ data }) => {
+        console.log(data);
         this.setState({
           buckets: data
         });
@@ -42,11 +45,63 @@ class Buckets extends Component {
     });
   }
 
+  getReminderInterval(reminderInterval) {
+    if (reminderInterval) {
+      if (reminderInterval === 1)
+        return '' + reminderInterval + ' day'
+      else
+        return '' + reminderInterval + ' days'
+    } else
+      return 'None'
+  }
+
+
   render() {
     return (
       // - Display all buckets for the user
       <div className="Buckets">
+        <Table celled fixed singleLine>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Contacts</Table.HeaderCell>
+              <Table.HeaderCell>Goal</Table.HeaderCell>
+              <Table.HeaderCell>Reminder</Table.HeaderCell>
+              <Table.HeaderCell>Grade</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {this.state.buckets.map((item, index) =>
+              <Table.Row key={index}>
+                {/*Name Section  */}
+                <Table.Cell className='buckets-primary-cell'>
+                  <Link to={`/buckets/${item.id}`}>{item.name}</Link>
+                </Table.Cell>
 
+                {/*Contacts Section  */}
+                <Table.Cell className='buckets-secondary-cell'>
+                  {item.extraData.contactCount}
+                </Table.Cell>
+
+                {/*Goal Section  */}
+                <Table.Cell className='buckets-secondary-cell'>
+                  {item.goal ? item.goal : 'None'}
+                </Table.Cell>
+
+                {/*Reminder Interval  */}
+                <Table.Cell className='buckets-secondary-cell'>
+                  {this.getReminderInterval(item.reminderInterval)}
+                </Table.Cell>
+
+                {/*Relationship Grade */}
+                <Table.Cell className='buckets-secondary-cell'>
+                  {item.extraData.relationshipStatus.grade}
+                </Table.Cell>
+
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
       </div>
     )
   }

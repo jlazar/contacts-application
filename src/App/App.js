@@ -15,8 +15,9 @@ import './App.css'
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.history.location.pathname.split('/')[1])
     this.state = {
-      activeItem: 'Home'
+      activeItem: this.props.history.location.pathname.split('/')[1]
     };
   }
 
@@ -39,12 +40,12 @@ class App extends Component {
   * @returns {string} - route for the menu item
   */
   getRouteForMenuItem(name) {
-    if (name === 'Home')
+    if (name === '')
       return '/'
-    if (name === 'Contacts')
+    if (name === 'contacts')
       return '/contacts/';
-    if (name === 'Buckets')
-      return '/buckets/0';
+    if (name === 'buckets')
+      return '/buckets/';
   }
 
   render() {
@@ -54,23 +55,23 @@ class App extends Component {
         {/*App Header*/}
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Contactually Lite</h2>
+          <h2 className="App-title">Contactually Lite</h2>
         </div>
         {/*App Menu*/}
         <Menu pointing secondary fluid>
           <Menu.Item
-            name='Home'
-            active={activeItem === 'Home'}
+            name=''
+            active={activeItem === ''}
+            onClick={this.handleItemClick.bind(this)}
+          >Home</Menu.Item>
+          <Menu.Item
+            name='contacts'
+            active={activeItem === 'contacts'}
             onClick={this.handleItemClick.bind(this)}
           />
           <Menu.Item
-            name='Contacts'
-            active={activeItem === 'Contacts'}
-            onClick={this.handleItemClick.bind(this)}
-          />
-          <Menu.Item
-            name='Buckets'
-            active={activeItem === 'Buckets'}
+            name='buckets'
+            active={activeItem === 'buckets'}
             onClick={this.handleItemClick.bind(this)}
           />
         </Menu>
@@ -80,12 +81,12 @@ class App extends Component {
           <p className="App-intro">
             Hey there, <br />
             Please use the navigation to move around this app<br /><br />
-            For the power users, check out /contacts, /buckets, /contacts/:contactId, and /buckets/:bucketId
+            Check out /contacts, /buckets, and /buckets/:bucketId
             </p>
         )} />
         <Route path='/contacts/' component={Contacts} />
         <Route path='/buckets/:bucketId' component={SingleBucket} />
-        <Route path='/buckets/' component={Buckets} />
+        <Route exact path='/buckets/' component={Buckets} />
       </div>
     )
   }

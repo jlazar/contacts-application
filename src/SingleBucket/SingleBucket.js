@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
+import { Button } from 'semantic-ui-react';
 import ContactsList from '../ContactsList/ContactsList.js';
 import { ApiClient } from '../lib/contactually-api';
 import './SingleBucket.css';
@@ -89,7 +91,8 @@ class SingleBucket extends Component {
         this.bucketData[key] = data[key];
       }
     }
-    if (this.bucketData.bucket && this.bucketData.contacts && this.bucketData.allContacts) {
+    if (this.bucketData.bucket && this.bucketData.currentContacts && this.bucketData.allContacts) {
+      console.log(this.bucketData)
       this.setState(this.bucketData);
       //reset bucket data for next set of async calls
       this.bucketData = {};
@@ -106,7 +109,7 @@ class SingleBucket extends Component {
       addContacts = [],
       removeContacts = [];
     for(let contact of addRemoveContacts) {
-      index = _.findIndex(this.selectedContacts, function(item) { return item.id == contact.id })
+      let index = _.findIndex(this.selectedContacts, function(item) { return item.id == contact.id })
       if(index > -1) {
         //add the contact
         addContacts.push({'id': contact.id});
@@ -117,7 +120,7 @@ class SingleBucket extends Component {
     }
 
     if(addContacts.length > 0) {
-      apiClient.post(`buckets/${bucketId}/contacts`, {
+      apiClient.post(`buckets/${this.props.match.params.bucketId}/contacts`, {
         // data: {
         //   data: addContacts
         // },
@@ -135,7 +138,7 @@ class SingleBucket extends Component {
     }
 
     if(removeContacts.length > 0) {
-      apiClient.delete(`buckets/${bucketId}/contacts`, {
+      apiClient.delete(`buckets/${this.props.match.params.bucketId}/contacts`, {
         // data: {
         //   data: removeContacts
         // },
@@ -162,7 +165,6 @@ class SingleBucket extends Component {
       // - Allow a user to remove a contact from that bucket
       <div className="Bucket">
         {this.state.bucket.name}
-        <button>Add Contact</button>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           {/* <SuperSelectField
             name='state11'
@@ -181,7 +183,7 @@ class SingleBucket extends Component {
             )}
           </SuperSelectField> */}
         </div>
-        <ContactsList contacts={this.state.contacts} />
+        <ContactsList contacts={this.state.currentContacts} removeOptions={true} bucketId={this.props.match.params.bucketId} updateContacts={() => this.updateBucket(this.props.match.params.bucketId)}/>
       </div>
     )
   }
