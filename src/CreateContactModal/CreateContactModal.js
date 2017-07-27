@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Popup, Button, Header, Image, Modal, Form, Container } from 'semantic-ui-react'
+import { Button, Modal, Form } from 'semantic-ui-react'
 
 class CreateContactModal extends Component {
   constructor(props) {
@@ -23,28 +23,31 @@ class CreateContactModal extends Component {
     });
   }
   handleChange(event, formKey) {
-    this.state.formData[formKey] = event;
+    const formData = this.state.formData
+    formData[formKey] = event;
+
     this.setState({
-      formData: this.state.formData
+      formData: formData
     });
   }
 
   handleEmailChange(event, formKey, index) {
-    this.state.formData.emailAddresses[index][formKey] = event;
+    const formData = this.state.formData
+    formData.emailAddresses[index][formKey] = event;
+
     this.setState({
-      formData: this.state.formData
+      formData: formData
     });
   }
 
   render() {
     let formData = this.state.formData;
-    console.log(formData);
     if(!formData.emailAddresses){
       formData.emailAddresses = [{}];
     }
     return (
       <div>
-        <Modal dimmer={false} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
+        <Modal dimmer={true} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
           <Modal.Header>New Contact: {formData.firstName} {formData.lastName}</Modal.Header>
           <Modal.Content>
             <Modal.Description>

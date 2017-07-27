@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
 class CreateContactModal extends Component {
   //Props:
@@ -7,7 +7,7 @@ class CreateContactModal extends Component {
   render() {
     return (
       <div>
-        <Modal dimmer={false} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
+        <Modal dimmer={true} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
           <Modal.Header>Delete this Contact</Modal.Header>
           <Modal.Content>
             <Modal.Description>

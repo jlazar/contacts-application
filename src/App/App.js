@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, Route, withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react';
 import Contacts from '../Contacts/Contacts.js'
 import SingleBucket from '../SingleBucket/SingleBucket.js';
@@ -15,7 +15,6 @@ import './App.css'
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.history.location.pathname.split('/')[1])
     this.state = {
       activeItem: this.props.history.location.pathname.split('/')[1]
     };

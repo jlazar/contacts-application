@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Popup, Button, Header, Image, Modal, Form, Container, Checkbox } from 'semantic-ui-react'
+import { Button, Modal, Checkbox } from 'semantic-ui-react'
 import { ApiClient } from '../lib/contactually-api';
 const apiClient = new ApiClient();
 
@@ -47,22 +47,23 @@ class AddExistingModal extends Component {
   }
 
   handleChange(index) {
-    this.state.contacts[index].checked = !this.state.contacts[index].checked;
+    const contacts = this.state.contacts;
+    contacts[index].checked = !contacts[index].checked;
     this.setState({
-      contacts: this.state.contacts
+      contacts: contacts
     });
   }
 
   render() {
     return (
       <div>
-        <Modal dimmer={false} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
+        <Modal dimmer={true} open={this.props.open} onClose={this.props.close} closeOnDocumentClick={true}>
           <Modal.Header>Add existing contacts to bucket</Modal.Header>
           <Modal.Content>
             <Modal.Description>
               {this.state.contacts.map((item, index) =>
-                <div>
-                  <Checkbox key={index} label={item.firstName + ' ' + item.lastName} onChange={() => this.handleChange(index)} checked={this.state.contacts[index].checked} />
+                <div key={index}>
+                  <Checkbox label={item.firstName + ' ' + item.lastName} onChange={() => this.handleChange(index)} checked={this.state.contacts[index].checked} />
                   <br />
                 </div>
               )}

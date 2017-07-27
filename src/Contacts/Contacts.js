@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ContactsList from '../ContactsList/ContactsList.js';
 import { ApiClient } from '../lib/contactually-api';
+import { Container } from 'semantic-ui-react'
+
 import './Contacts.css';
 
 const apiClient = new ApiClient()
@@ -42,7 +44,9 @@ class Contacts extends Component {
   render() {
     return (
       <div className="Contacts">
-        <ContactsList contacts={this.state.contacts} updateContacts={() => this.updateContacts()} />
+        <Container>
+          <ContactsList contacts={this.state.contacts} updateContacts={() => this.updateContacts()} />
+        </Container>
       </div>
     )
   }

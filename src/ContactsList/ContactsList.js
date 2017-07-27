@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Dropdown, Image, Table, Button, Container } from 'semantic-ui-react';
+import { Table, Button, Container } from 'semantic-ui-react';
 import CreateContactModal from '../CreateContactModal/CreateContactModal.js';
 import EditContactModal from '../EditContactModal/EditContactModal.js';
 import DeleteContactModal from '../DeleteContactModal/DeleteContactModal';
@@ -18,7 +18,6 @@ const apiClient = new ApiClient();
 class ContactsList extends Component {
   constructor(props) {
     super(props);
-    console.log(this);
     this.state = {
       openCreateModal: false,
       openEditModal: false
@@ -46,7 +45,6 @@ class ContactsList extends Component {
         apiClient.patch(`contacts/${formData.id}`, {
           data: formData,
           onSuccess: ({ data }) => {
-            console.log(data)
             this.setState({ openEditModal: false });
           },
           onError: () => { /* would be cool to do something here */ }
@@ -94,7 +92,6 @@ class ContactsList extends Component {
             id: formData.id.split('contacts_')[1]
           },
           onSuccess: ({ data }) => {
-            console.log(data)
             this.setState({ openDeleteModal: false });
             this.props.updateContacts();
           },
@@ -103,8 +100,29 @@ class ContactsList extends Component {
       } else {
         this.setState({ openDeleteModal: false });
       }
+    } else if (updateType === 'addExisting') {
+      if (formData) {
+        let newData = [];
+        for (let ele of formData) {
+          if (ele.checked) {
+            newData.push({ id: ele.id });
+          }
+        }
+        apiClient.post(`buckets/${this.props.bucketId}/contacts`, {
+          data: newData,
+          onSuccess: ({ data }) => {
+            this.setState({ openAddExistingModal: false });
+            this.props.updateContacts();
+          },
+          onError: (error) => {
+            console.log(error)
+          }
+        });
+      } else {
+        this.setState({ openAddExistingModal: false });
+      }
+      this.formData = {};
     }
-    this.formData = {};
   }
 
   getOptionsSection(item) {
@@ -115,13 +133,13 @@ class ContactsList extends Component {
       <Table.Cell>
         <Button
           content='Edit'
-          icon='heart'
+          icon='edit'
           labelPosition='right'
           onClick={this.optionClicked.bind(this, 'edit', item)}
         />
         <Button
           content='Delete'
-          icon='heart'
+          icon='delete'
           labelPosition='right'
           onClick={this.optionClicked.bind(this, 'delete', item)}
         />
@@ -129,7 +147,6 @@ class ContactsList extends Component {
   }
 
   render() {
-    let contactList = this;
     return (
       <div className="ContactsList">
         <CreateContactModal
