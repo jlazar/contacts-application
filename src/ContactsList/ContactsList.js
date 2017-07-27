@@ -57,8 +57,12 @@ class ContactsList extends Component {
   * @returns {void}
   */
   closeModal(formData, updateType) {
+    if(formData.type === 'click'){
+      //dont catch mouse event
+      formData = null;
+    }
     if (updateType === 'edit') {
-      if (formData) {
+      if (formData && formData.id) {
         apiClient.patch(`contacts/${formData.id}`, {
           data: formData,
           onSuccess: ({ data }) => {
@@ -103,7 +107,7 @@ class ContactsList extends Component {
         this.setState({ openCreateModal: false });
       }
     } else if (updateType === 'delete') {
-      if (formData) {
+      if (formData && formData.id) {
         apiClient.delete(`contacts/${formData.id}`, {
           data: {
             id: formData.id.split('contacts_')[1]
