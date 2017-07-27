@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal } from 'semantic-ui-react'
 
-class CreateContactModal extends Component {
-  //Props:
-  //open, close, actionType, field, modalContent
+class DeleteContactModal extends Component {
   render() {
     return (
       <div>
@@ -28,4 +26,4 @@ class CreateContactModal extends Component {
   }
 }
 
-export default CreateContactModal
+export default DeleteContactModal

@@ -3,8 +3,6 @@ import ContactsList from '../ContactsList/ContactsList.js';
 import { ApiClient } from '../lib/contactually-api';
 import { Container } from 'semantic-ui-react'
 
-import './Contacts.css';
-
 const apiClient = new ApiClient()
 
 /**

@@ -3,8 +3,6 @@ import ContactsList from '../ContactsList/ContactsList.js';
 import { ApiClient } from '../lib/contactually-api';
 import { Container } from 'semantic-ui-react';
 
-import './SingleBucket.css';
-
 const apiClient = new ApiClient();
 
 /**
@@ -86,12 +84,7 @@ class SingleBucket extends Component {
   }
 
   render() {
-    console.log(this.state.bucket)
     return (
-      // - Display a bucket which belongs to the user
-      // - Display a list of contacts within that bucket
-      // - Allow a user to add a contact to that bucket
-      // - Allow a user to remove a contact from that bucket
       <div className="Bucket">
         <h3>{this.state.bucket.name}</h3>
         <Container>

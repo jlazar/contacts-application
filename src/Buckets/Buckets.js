@@ -43,6 +43,12 @@ class Buckets extends Component {
     });
   }
 
+  /**
+  * @name getReminderInterval
+  * @desc Add appropriate ending to the reminder
+  * @param {number} reminderInterval - number interval
+  * @returns {string}
+  */
   getReminderInterval(reminderInterval) {
     if (reminderInterval) {
       if (reminderInterval === 1)
@@ -52,7 +58,6 @@ class Buckets extends Component {
     } else
       return 'None'
   }
-
 
   render() {
     return (

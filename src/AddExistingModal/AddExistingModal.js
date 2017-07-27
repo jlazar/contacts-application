@@ -3,6 +3,11 @@ import { Button, Modal, Checkbox } from 'semantic-ui-react'
 import { ApiClient } from '../lib/contactually-api';
 const apiClient = new ApiClient();
 
+/**
+* @name AddExistingModal
+* @desc Add Existing Modal for adding a contact to a bucket
+* @returns {void}
+*/
 class AddExistingModal extends Component {
   constructor(props) {
     super(props);
@@ -24,10 +29,10 @@ class AddExistingModal extends Component {
   }
 
   /**
-* @name updateContacts
-* @desc Makes async call to contactually api to update the current state with all of the users contacts
-* @returns {void}
-*/
+  * @name updateContacts
+  * @desc Makes async call to contactually api to update the current state with all of the users contacts
+  * @returns {void}
+  */
   updateContacts() {
     apiClient.get('contacts', {
       onSuccess: ({ data }) => {
@@ -46,6 +51,12 @@ class AddExistingModal extends Component {
     })
   }
 
+  /**
+  * @name handleChange
+  * @desc Updates the modal state
+  * @param {number} index - contact index to mark as checked
+  * @returns {void}
+  */
   handleChange(index) {
     const contacts = this.state.contacts;
     contacts[index].checked = !contacts[index].checked;

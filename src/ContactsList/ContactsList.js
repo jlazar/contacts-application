@@ -26,6 +26,13 @@ class ContactsList extends Component {
     this.formData = {};
   }
 
+  /**
+  * @name optionClicked
+  * @desc Loads appropriate modal for the user
+  * @param {string} type - type of action the user clicked
+  * @param {object} item - contact that the user clicked
+  * @returns {void}
+  */
   optionClicked(type, item) {
     if (type === 'edit') {
       this.formData = item;
@@ -40,6 +47,15 @@ class ContactsList extends Component {
     }
   }
 
+  /**
+  * @name closeModal
+  * @desc Closes the modal and runs the appropriate async call
+  * TODO would be desirable to break this out into a service for better flux
+  * TODO error handling 
+  * @param {object} formData - data from the modal
+  * @param {string} updateType - action from the user
+  * @returns {void}
+  */
   closeModal(formData, updateType) {
     if (updateType === 'edit') {
       if (formData) {
@@ -144,9 +160,15 @@ class ContactsList extends Component {
     }
   }
 
+  /**
+  * @name getOptionsSection
+  * @desc Returns options section for the given contact
+  * @param {object} item - contact that the user clicked
+  * @returns {void}
+  */
   getOptionsSection(item) {
     if (this.props.removeOptions) {
-      return '';
+      return null;
     }
     return (
       <Table.Cell>
@@ -196,7 +218,7 @@ class ContactsList extends Component {
               <Table.HeaderCell>Contact</Table.HeaderCell>
               <Table.HeaderCell>Buckets</Table.HeaderCell>
               {
-                this.props.removeOptions ? '' : <Table.HeaderCell>Options</Table.HeaderCell>
+                this.props.removeOptions ? null : <Table.HeaderCell>Options</Table.HeaderCell>
               }
 
             </Table.Row>
@@ -244,7 +266,7 @@ class ContactsList extends Component {
         </Table>
         <Button primary onClick={() => this.setState({ openCreateModal: true })}>New Contact</Button>
         {this.props.bucketId ?
-          <Button primary onClick={() => this.setState({ openAddExistingModal: true })}>Add Existing Contact</Button> : ''
+          <Button primary onClick={() => this.setState({ openAddExistingModal: true })}>Add Existing Contact</Button> : null
         }
       </div >
     )
